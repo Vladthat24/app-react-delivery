@@ -1,28 +1,34 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  Button,
-  ToastAndroid,
-} from "react-native";
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/views/home/Home';
+import RegisterScreen from './src/views/register/Register';
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList={
+  HomeScreen:undefined,
+  RegisterScreen:undefined,
+}
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{
-        headerShown:false
+        headerShown: false
       }}>
+
         <Stack.Screen
-          name="HomeScrem"
+          name="HomeScreen"
           component={HomeScreen}
+        />
+        <Stack.Screen
+          name="RegisterScreen"
+          component={RegisterScreen}
+          options={{
+            headerShown:true,
+            title:'Nuevo Registro'
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
