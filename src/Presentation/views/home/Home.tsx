@@ -10,14 +10,15 @@ import {
   ToastAndroid,
   TouchableOpacity,
 } from "react-native";
-import RounderButton from "../../Presentation/components/RounderButton";
+import RounderButton from "../../../Presentation/components/RounderButton";
+import CustomElementRegistry from "../../../Presentation/components/CustomTextInput";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../App";
+import { RootStackParamList } from "../../../../App";
+import useViewModel from './ViewModel';
 
 const HomeScreen = () => {
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { email, password, onChange } = useViewModel();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -26,41 +27,33 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <Image
         style={styles.imageBackground}
-        source={require("../../../assets/chef.jpg")}
+        source={require("../../../../assets/chef.jpg")}
       />
       <View style={styles.logoContainer}>
-        <Image style={styles.logoImage} source={require("../../../assets/logo.png")} />
+        <Image style={styles.logoImage} source={require("../../../../assets/logo.png")} />
         <Text style={styles.logoText}>AyudaPE.</Text>
       </View>
       <View style={styles.form}>
         <Text style={styles.formText}>INGRESAR</Text>
-        <View style={styles.formInput}>
-          <Image
-            style={styles.formIcon}
-            source={require("../../../assets/email.png")}
-          />
-          <TextInput
-            style={styles.formTextInput}
-            placeholder="Correo Electronico"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={text => setEmail(text)}
-          />
-        </View>
-        <View style={styles.formInput}>
-          <Image
-            style={styles.formIcon}
-            source={require("../../../assets/password.png")}
-          />
-          <TextInput
-            style={styles.formTextInput}
-            placeholder="Contraseña"
-            keyboardType="default"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={text => setPassword(text)}
-          />
-        </View>
+        <CustomElementRegistry
+          image={require('../../../../assets/email.png')}
+          placerholder='Correo Electronico'
+          keyboardType='email-address'
+          property='email'
+          onChangeText={onChange}
+          value={email}
+        />
+
+        <CustomElementRegistry
+          image={require('../../../../assets/password.png')}
+          placerholder='Contraseña'
+          keyboardType='default'
+          property='password'
+          onChangeText={onChange}
+          value={password}
+          secureTextEntry={true}
+        />
+
         <View style={{ marginTop: 30 }}>
           {/*           <Button
                 title="Enviar"
