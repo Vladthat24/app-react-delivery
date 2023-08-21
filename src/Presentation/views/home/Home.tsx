@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
-  StyleSheet,
   Text,
   View,
   Image,
-  TextInput,
-  Button,
-  ToastAndroid,
   TouchableOpacity,
+  ToastAndroid,
 } from "react-native";
 import RounderButton from "../../../Presentation/components/RounderButton";
 import CustomElementRegistry from "../../../Presentation/components/CustomTextInput";
@@ -19,10 +16,15 @@ import styles from "./Styles";
 
 const HomeScreen = () => {
 
-  const { email, password, onChange } = useViewModel();
+  const { email, password, onChange,login,error } = useViewModel();
+
+  useEffect(()=>{
+    if(error!==''){
+      ToastAndroid.show(error,ToastAndroid.LONG);
+    }
+  },[error])
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
 
   return (
     <View style={styles.container}>
@@ -65,6 +67,7 @@ const HomeScreen = () => {
             text="Iniciar"
             /* onPress={() => ToastAndroid.show("Click", ToastAndroid.SHORT)} */
             onPress={() => {
+              login();
               console.log("email", email);
               console.log("passwor", password);
             }}
