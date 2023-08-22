@@ -16,15 +16,22 @@ import styles from "./Styles";
 
 const HomeScreen = () => {
 
-  const { email, password, onChange,login,error } = useViewModel();
-
+  const { email, password, onChange,login,error,user } = useViewModel();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   useEffect(()=>{
     if(error!==''){
       ToastAndroid.show(error,ToastAndroid.LONG);
     }
   },[error])
 
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  useEffect(() => {
+    if(user?.id !==null && user?.id!==undefined){
+      navigation.navigate('ProfileInfoScreen');
+    } 
+  }, [user])
+  
+
+
 
   return (
     <View style={styles.container}>
@@ -66,11 +73,7 @@ const HomeScreen = () => {
           <RounderButton
             text="Iniciar"
             /* onPress={() => ToastAndroid.show("Click", ToastAndroid.SHORT)} */
-            onPress={() => {
-              login();
-              console.log("email", email);
-              console.log("passwor", password);
-            }}
+            onPress={() => {login()}}
           />
         </View>
 
