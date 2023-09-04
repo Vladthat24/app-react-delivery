@@ -9,15 +9,17 @@ import {
 } from "react-native";
 import RounderButton from "../../../Presentation/components/RounderButton";
 import CustomElementRegistry from "../../../Presentation/components/CustomTextInput";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../App";
 import useViewModel from './ViewModel';
 import styles from "./Styles";
 
-const HomeScreen = () => {
+interface Props extends StackScreenProps<RootStackParamList,'HomeScreen'>{};
+
+const HomeScreen = ({navigation,route}:Props) => {
 
   const { email, password, onChange,login,error,user } = useViewModel();
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
   useEffect(()=>{
     if(error!==''){
       ToastAndroid.show(error,ToastAndroid.LONG);
@@ -26,7 +28,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if(user?.id !==null && user?.id!==undefined){
-      navigation.navigate('ProfileInfoScreen');
+      navigation.replace('ProfileInfoScreen');
     } 
   }, [user])
   

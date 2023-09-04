@@ -1,22 +1,27 @@
-import React, { useEffect } from "react";
-import { Text, View, Image, ScrollView, ToastAndroid } from "react-native";
+import React, { useEffect,useState } from "react";
+import { Text, View, Image, ScrollView, ToastAndroid,TouchableOpacity } from "react-native";
 import RounderButton from "../../../Presentation/components/RounderButton";
 import useViewModel from "./ViewModel";
 import CustomElementRegistry from "../../../Presentation/components/CustomTextInput";
 import styles from "./Styles";
+import ModalPickImage from "../../components/ModalPickImage";
 
 export const RegisterScreen = () => {
   const {
     name,
     lastname,
     email,
+    image,
     phone,
     password,
     confirmPassword,
     onChange,
     register,
+    pickerImage,
     errorMessage,
   } = useViewModel();
+
+  const [modalVisible,setModalVisible]=useState(false);
 
   useEffect(() => {
     if (errorMessage != "") {
@@ -31,10 +36,20 @@ export const RegisterScreen = () => {
         source={require("../../../../assets/chef.jpg")}
       />
       <View style={styles.logoContainer}>
-        <Image
-          style={styles.logoImage}
-          source={require("../../../../assets/user_image.png")}
-        />
+        <TouchableOpacity onPress={()=>setModalVisible(true)}>
+          {
+            image==''
+            ? <Image
+            style={styles.logoImage}
+            source={require("../../../../assets/user_image.png")}/>
+            : <Image
+            style={styles.logoImage}
+            source={{ uri: image }}/>
+
+          }
+
+        </TouchableOpacity>
+
         <Text style={styles.logoText}>Seleccionar Imagen</Text>
       </View>
       <View style={styles.form}>
@@ -102,6 +117,13 @@ export const RegisterScreen = () => {
           </View>
         </ScrollView>
       </View>
+
+      <ModalPickImage
+        openGallery={pickerImage}
+        openCamara={pickerImage}
+        modalUseState={modalVisible}
+        setModalUserState={setModalVisible}
+      />
     </View>
   );
 };
