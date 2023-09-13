@@ -18,6 +18,7 @@ export const RegisterScreen = () => {
     onChange,
     register,
     pickerImage,
+    takePhoto,
     errorMessage,
   } = useViewModel();
 
@@ -120,7 +121,7 @@ export const RegisterScreen = () => {
 
       <ModalPickImage
         openGallery={pickerImage}
-        openCamara={pickerImage}
+        openCamara={takePhoto}
         modalUseState={modalVisible}
         setModalUserState={setModalVisible}
       />
