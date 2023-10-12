@@ -1,12 +1,17 @@
-import React, { useEffect,useState } from "react";
-import { Text, View, Image, ScrollView, ToastAndroid,TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View, Image, ActivityIndicator, ScrollView, ToastAndroid, TouchableOpacity } from "react-native";
 import RounderButton from "../../../Presentation/components/RounderButton";
 import useViewModel from "./ViewModel";
 import CustomElementRegistry from "../../../Presentation/components/CustomTextInput";
 import styles from "./Styles";
 import ModalPickImage from "../../components/ModalPickImage";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParamList } from "../../../../App";
+import { MyColors } from "../../theme/AppThemes";
 
-export const RegisterScreen = () => {
+interface Props extends StackScreenProps<RootStackParamList, 'RegisterScreen'> { };
+
+export const RegisterScreen = ({ navigation, route }: Props) => {
   const {
     name,
     lastname,
@@ -15,6 +20,8 @@ export const RegisterScreen = () => {
     phone,
     password,
     confirmPassword,
+    loading,
+    user,
     onChange,
     register,
     pickerImage,
@@ -22,7 +29,7 @@ export const RegisterScreen = () => {
     errorMessage,
   } = useViewModel();
 
-  const [modalVisible,setModalVisible]=useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if (errorMessage != "") {
@@ -30,22 +37,29 @@ export const RegisterScreen = () => {
     }
   }, [errorMessage]);
 
+  useEffect(() => {
+    if (user?.id !== null && user?.id !== undefined) {
+      navigation.replace('ProfileInfoScreen');
+    }
+  }, [user])
+
   return (
     <View style={styles.container}>
+
       <Image
         style={styles.imageBackground}
         source={require("../../../../assets/chef.jpg")}
       />
       <View style={styles.logoContainer}>
-        <TouchableOpacity onPress={()=>setModalVisible(true)}>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
           {
-            image==''
-            ? <Image
-            style={styles.logoImage}
-            source={require("../../../../assets/user_image.png")}/>
-            : <Image
-            style={styles.logoImage}
-            source={{ uri: image }}/>
+            image == ''
+              ? <Image
+                style={styles.logoImage}
+                source={require("../../../../assets/user_image.png")} />
+              : <Image
+                style={styles.logoImage}
+                source={{ uri: image }} />
 
           }
 
@@ -125,6 +139,14 @@ export const RegisterScreen = () => {
         modalUseState={modalVisible}
         setModalUserState={setModalVisible}
       />
+      {
+        loading &&
+        <ActivityIndicator 
+        style={styles.loading} 
+        size="large" 
+        color={MyColors.primary} />
+      }
+
     </View>
   );
 };

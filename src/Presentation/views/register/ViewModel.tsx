@@ -3,6 +3,9 @@ import { ApiDelivery } from '../../../Data/sources/remote/api/ApiDelivery';
 import { RegisterAuthUseCase } from '../../../Domain/useCases/auth/RegisterAuth';
 import { RegisterWithImageAuthUseCase } from '../../../Domain/useCases/auth/RegisterWithImageAuth';
 import * as ImagePicker from 'expo-image-picker';
+//Importar caso de uso
+import { SaveUserLocalUseCase } from '../../../Domain/useCases/userLocal/SaveUserLocal';
+import { useUserLocal } from '../../hooks/useUserLocal';
 
 const RegisterViewModel=()=> {
 
@@ -18,8 +21,10 @@ const RegisterViewModel=()=> {
         confirmPassword:'',
     })
 
+    const [loading,setLoading]=useState(false);
     const [file,setFile]= useState<ImagePicker.ImagePickerAsset>()
-    
+    const {user,getUsersSession}=useUserLocal();
+
     const pickerImage=async()=>{
         let result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -52,11 +57,21 @@ const RegisterViewModel=()=> {
 
     const register= async ()=>{
       if(isValidForm()){
+        setLoading(true);
         console.log("Values: ",values);
         console.log("File: ",file!);
         //const apiResponse= await RegisterAuthUseCase(values)
         const apiResponse=await RegisterWithImageAuthUseCase(values,file!);
+        setLoading(false);
         console.log('Result: '+ JSON.stringify(apiResponse));
+        if(apiResponse.success){
+          await SaveUserLocalUseCase(apiResponse.data);
+          getUsersSession();
+          
+        }else{
+          setErrorMessage(apiResponse.message);
+        }
+        
       }else{
         console.log("No paso validacion");
         
@@ -106,6 +121,9 @@ const RegisterViewModel=()=> {
     pickerImage,
     takePhoto,
     errorMessage,
+    user,
+    getUsersSession,
+    loading,
   }
 }
 

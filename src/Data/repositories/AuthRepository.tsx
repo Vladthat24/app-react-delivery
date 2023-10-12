@@ -7,6 +7,7 @@ import {
 } from "../sources/remote/api/ApiDelivery";
 import { ResponseApiDelivery } from "../sources/remote/models/ResponseApiDelivery";
 import * as ImagePicker from "expo-image-picker";
+import { ImagePickerResult } from 'expo-image-picker';
 import mime from "mime";
 
 export class AuthRepositoryImpl implements AuthRepository {
@@ -51,7 +52,7 @@ export class AuthRepositoryImpl implements AuthRepository {
 
   async registerWithImage(
     user: User,
-    file: ImagePicker.ImagePickerAsset
+    file: ImagePickerResult
   ): Promise<ResponseApiDelivery> {
     try {
       /*       let data = new FormData();
@@ -61,6 +62,9 @@ export class AuthRepositoryImpl implements AuthRepository {
         name: file.uri.split('/').pop(),
         type: mime.getType(file.uri)!
       } as any); */
+      console.log("File AAAA",typeof(file));
+      console.log("File AAAAE",file.uri);
+      console.log("File AAAAQ",file.uri.split("/").pop());
 
       let data = new FormData();
       const fileDetails = {
@@ -69,10 +73,10 @@ export class AuthRepositoryImpl implements AuthRepository {
         type: mime.getType(file.uri)!,
       };
 
-      data.append("image", JSON.stringify(fileDetails));
+      data.append("image", fileDetails);
 
       data.append("user", JSON.stringify(user));
-
+      console.log("data para enviar: ",data);
       const response = await ApiDeliveryFormData.post<ResponseApiDelivery>(
         "/users/createWithImage",
         data
