@@ -1,3 +1,4 @@
+import {Rol} from "./Rol";
 export interface User {
     id?:              string;
     name:             string;
