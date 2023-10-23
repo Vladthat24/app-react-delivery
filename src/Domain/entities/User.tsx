@@ -7,6 +7,7 @@ export interface User {
     email:            string;
     password:         string;
     confirmPassword:  string;
+    image?:           string;
     session_token?:   string;
     roles?:           Rol[];
 }

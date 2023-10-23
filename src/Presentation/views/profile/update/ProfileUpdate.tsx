@@ -1,33 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, Image, ActivityIndicator, ScrollView, ToastAndroid, TouchableOpacity } from "react-native";
-import RounderButton from "../../../Presentation/components/RounderButton";
+import RounderButton from "../../../../Presentation/components/RounderButton";
 import useViewModel from "./ViewModel";
-import CustomElementRegistry from "../../../Presentation/components/CustomTextInput";
+import CustomElementRegistry from "../../../../Presentation/components/CustomTextInput";
 import styles from "./Styles";
-import ModalPickImage from "../../components/ModalPickImage";
+import ModalPickImage from "../../../components/ModalPickImage";
 import { StackScreenProps } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../../App";
-import { MyColors } from "../../theme/AppThemes";
+import { RootStackParamList } from "../../../../../App";
+import { MyColors } from "../../../theme/AppThemes";
 
-interface Props extends StackScreenProps<RootStackParamList, 'RegisterScreen'> { };
+interface Props extends StackScreenProps<RootStackParamList, 'ProfileUpdateScreen'> { };
 
-export const RegisterScreen = ({ navigation, route }: Props) => {
+//route=>Obtiene informacion se que envia de otras pantallas
+export const ProfileUpdateScreen = ({ navigation, route }: Props) => {
+
+  const {user}=route.params;
+  
   const {
     name,
     lastname,
-    email,
     image,
     phone,
-    password,
-    confirmPassword,
     loading,
-    user,
     onChange,
-    register,
+    update,
+    onChangeInfoUpdate,
     pickerImage,
     takePhoto,
     errorMessage,
-  } = useViewModel();
+    successMessage,
+  } = useViewModel(user);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -37,18 +39,25 @@ export const RegisterScreen = ({ navigation, route }: Props) => {
     }
   }, [errorMessage]);
 
+
   useEffect(() => {
-    if (user?.id !== null && user?.id !== undefined) {
-      navigation.replace('ClientTabsNavigator');
+    if (successMessage != "") {
+      ToastAndroid.show(successMessage, ToastAndroid.LONG);
     }
-  }, [user])
+  }, [successMessage]);
+
+
+  useEffect(()=>{
+    console.log("prueba: user: ",user);
+    onChangeInfoUpdate(user?.name!,user?.lastname!,user?.phone!);
+  },[user])
 
   return (
     <View style={styles.container}>
 
       <Image
         style={styles.imageBackground}
-        source={require("../../../../assets/chef.jpg")}
+        source={require("../../../../../assets/chef.jpg")}
       />
       <View style={styles.logoContainer}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -56,7 +65,7 @@ export const RegisterScreen = ({ navigation, route }: Props) => {
             image == ''
               ? <Image
                 style={styles.logoImage}
-                source={require("../../../../assets/user_image.png")} />
+                source={{uri:user?.image}} />
               : <Image
                 style={styles.logoImage}
                 source={{ uri: image }} />
@@ -69,12 +78,12 @@ export const RegisterScreen = ({ navigation, route }: Props) => {
       </View>
       <View style={styles.form}>
         <ScrollView>
-          <Text style={styles.formText}>Registarse</Text>
+          <Text style={styles.formText}>ACTUALIZAR</Text>
 
           <CustomElementRegistry
             placerholder="Nombres"
             keyboardType="default"
-            image={require("../../../../assets/user.png")}
+            image={require("../../../../../assets/user.png")}
             property="name"
             onChangeText={onChange}
             value={name}
@@ -83,7 +92,7 @@ export const RegisterScreen = ({ navigation, route }: Props) => {
           <CustomElementRegistry
             placerholder="Apellidos"
             keyboardType="default"
-            image={require("../../../../assets/my_user.png")}
+            image={require("../../../../../assets/my_user.png")}
             property="lastname"
             onChangeText={onChange}
             value={lastname}
@@ -91,42 +100,16 @@ export const RegisterScreen = ({ navigation, route }: Props) => {
           <CustomElementRegistry
             placerholder="Cel/Telf"
             keyboardType="numeric"
-            image={require("../../../../assets/phone.png")}
+            image={require("../../../../../assets/phone.png")}
             property="phone"
             onChangeText={onChange}
             value={phone}
-          />
-          <CustomElementRegistry
-            placerholder="Correo Eletronico"
-            keyboardType="email-address"
-            image={require("../../../../assets/email.png")}
-            property="email"
-            onChangeText={onChange}
-            value={email}
-          />
-          <CustomElementRegistry
-            placerholder="Contraseña"
-            keyboardType="default"
-            image={require("../../../../assets/password.png")}
-            property="password"
-            onChangeText={onChange}
-            value={password}
-            secureTextEntry={true}
-          />
-          <CustomElementRegistry
-            placerholder="Confirmar Contraseña"
-            keyboardType="default"
-            image={require("../../../../assets/confirm_password.png")}
-            property="confirmPassword"
-            onChangeText={onChange}
-            value={confirmPassword}
-            secureTextEntry={true}
           />
           <View style={{ marginTop: 30 }}>
             <RounderButton
               text="Confirmar"
               onPress={() => {
-                register();
+                update();
               }}
             />
           </View>
@@ -142,7 +125,6 @@ export const RegisterScreen = ({ navigation, route }: Props) => {
       {
         loading &&
         <ActivityIndicator 
-        style={styles.loading} 
         size="large" 
         color={MyColors.primary} />
       }
@@ -151,4 +133,4 @@ export const RegisterScreen = ({ navigation, route }: Props) => {
   );
 };
 
-export default RegisterScreen;
+export default ProfileUpdateScreen;

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { LoginAuthUseCase } from "../../../Domain/useCases/auth/LoginAuth";
 import { SaveUserLocalUseCase } from "../../../Domain/useCases/userLocal/SaveUserLocal";
 import { GetUserLocalUseCase } from "../../../Domain/useCases/userLocal/GetUserLocal";
 import { useUserLocal } from "../../hooks/useUserLocal";
+import { UserContext } from "../../context/UserContext";
 
 const HomeViewModel = () => {
   const [values, setValues] = useState({
@@ -11,7 +12,8 @@ const HomeViewModel = () => {
   });
   const [error, setErrorMessage] = useState("");
 
-  const { user,getUsersSession } = useUserLocal();
+  //const { user,getUsersSession } = useUserLocal();
+  const {user,saveUserSession}=useContext(UserContext);
 
   console.log("Usuario de sesion:" + JSON.stringify(user));
 
@@ -26,8 +28,7 @@ const HomeViewModel = () => {
       if (!response.success) {
         setErrorMessage(response.message);
       } else {
-        await SaveUserLocalUseCase(response.data);
-        getUsersSession();
+        saveUserSession(response.data);
         console.log("Usuario Guardado:",response);
       }
     }

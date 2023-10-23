@@ -72,7 +72,7 @@ export class AuthRepositoryImpl implements AuthRepository {
         name: file.uri.split("/").pop(),
         type: mime.getType(file.uri)!,
       };
-
+      console.log("debug");
       data.append("image", fileDetails);
 
       data.append("user", JSON.stringify(user));
