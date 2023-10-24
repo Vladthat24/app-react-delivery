@@ -29,19 +29,6 @@ export class UserRepositoryImpl implements UserRepository {
     file: ImagePickerResult
   ): Promise<ResponseApiDelivery> {
     try {
-      console.log("Aqui");
-      
-      /*       let data = new FormData();
-        data.append('image', {
-          //@ts-ignore
-          uri: file.uri,
-          name: file.uri.split('/').pop(),
-          type: mime.getType(file.uri)!
-        } as any); */
-      console.log("File AAAA", typeof file);
-      console.log("File AAAAE", file.uri);
-      console.log("File AAAAQ", file.uri.split("/").pop());
-
       let data = new FormData();
       const fileDetails = {
         uri: file.uri,
