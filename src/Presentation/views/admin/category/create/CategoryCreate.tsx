@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, Pressable, Image, ActivityIndicator } from "react-native";
+import React, { useState,useEffect } from "react";
+import { View, Text, Pressable, Image, ActivityIndicator, ToastAndroid } from "react-native";
 import styles from "./Styles";
 import CustomTextInput from "../../../../components/CustomTextInput";
 import useViewModel from "./ViewModel";
@@ -11,16 +11,24 @@ import { MyColors } from "../../../../theme/AppThemes";
 export const AdminCategoryCreateScreen = () => {
   const {
     name,
-    descripcion,
+    description,
     image,
     onChange,
-    successMessage,
-    errorMessage,
+    responseMessage,
     loading,
     pickerImage,
     takePhoto,
+    createCategory,
   } = useViewModel();
+
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(()=>{
+    if(responseMessage!==''){
+      ToastAndroid.show(responseMessage,ToastAndroid.LONG);
+    }
+  },[responseMessage])
+
   return (
     <View style={styles.container}>
       <Pressable
@@ -50,13 +58,13 @@ export const AdminCategoryCreateScreen = () => {
           placerholder="Nombre de la Categoria"
           image={require("../../../../../../assets/description.png")}
           keyboardType="default"
-          property="descripcion"
-          value={descripcion}
+          property="description"
+          value={description}
           onChangeText={onChange}
         />
       </View>
       <View style={styles.buttonContainer}>
-        <RounderButton text="CREAR CATEGORIA" onPress={() => {}} />
+        <RounderButton text="CREAR CATEGORIA" onPress={() => createCategory()} />
       </View>
 
       <ModalPickImage
