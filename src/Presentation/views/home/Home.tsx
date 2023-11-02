@@ -10,7 +10,7 @@ import {
 import RounderButton from "../../../Presentation/components/RounderButton";
 import CustomElementRegistry from "../../../Presentation/components/CustomTextInput";
 import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../../App";
+import { RootStackParamList } from "../../navigator/MainStackNavigator";
 import useViewModel from './ViewModel';
 import styles from "./Styles";
 

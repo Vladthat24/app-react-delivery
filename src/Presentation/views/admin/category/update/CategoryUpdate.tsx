@@ -15,10 +15,11 @@ import RounderButton from "../../../../components/RounderButton";
 import ModalPickImage from "../../../../components/ModalPickImage";
 import { MyColors } from "../../../../theme/AppThemes";
 import { StackScreenProps } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../../../../App";
+import { CategoryStackParamList } from "../../../../navigator/AdminCategoryNavigator";
+
 
 interface Props
-  extends StackScreenProps<RootStackParamList, "AdminCategoryUpdateScreen"> {}
+  extends StackScreenProps<CategoryStackParamList, "AdminCategoryUpdateScreen"> {}
 export const AdminCategoryUpdateScreen = ({ navigation, route }: Props) => {
   const { category } = route.params;
 
