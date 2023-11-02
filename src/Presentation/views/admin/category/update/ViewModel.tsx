@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
-import { CreateCategoryUseCase } from "../../../../../Domain/useCases/category/CreateCategory";
+import { UpdateCategoryUseCase } from "../../../../../Domain/useCases/category/UpdateCategory";
+import { UpdateWithImageCategoryUseCase } from "../../../../../Domain/useCases/category/UpdateWithImageCategory";
 
-const AdminCategoryCreateViewModel = () => {
-  const [values, setValues] = useState({
-    name: "",
-    description: "",
-    image: "",
-  });
+import { Category } from "../../../../../Domain/entities/Category";
+import { ResponseApiDelivery } from "../../../../../Data/sources/remote/models/ResponseApiDelivery";
+
+const AdminCategoryUpdateViewModel = (category:Category) => {
+  const [values, setValues] = useState(category);
 
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
@@ -18,16 +18,20 @@ const AdminCategoryCreateViewModel = () => {
     setValues({ ...values, [property]: value });
   };
 
-  const createCategory = async () => {
+  const updateCategory = async () => {
    
-    setLoading(true)
-    console.log("Values: ",values);
-    console.log("File: ",file!);
-    const response = await CreateCategoryUseCase(values as any, file!);
+    setLoading(true);
+    let response={} as ResponseApiDelivery;
+    if(values.image?.includes('https://')){
+      response = await UpdateCategoryUseCase(values);
+    }else{
+      //Actualizar con imagen
+      response = await UpdateWithImageCategoryUseCase(values,file!);
+      
+    }
     setLoading(false);
     if (response.success) {
       setResponseMessage(response.message);
-      resetForm();
     }
   };
 
@@ -73,8 +77,8 @@ const AdminCategoryCreateViewModel = () => {
     loading,
     successMessage,
     responseMessage,
-    createCategory,
+    updateCategory,
   };
 };
 
-export default AdminCategoryCreateViewModel;
+export default AdminCategoryUpdateViewModel;

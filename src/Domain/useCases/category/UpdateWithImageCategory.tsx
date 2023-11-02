@@ -3,8 +3,8 @@ import { Category } from '../../entities/Category'
 import { ImagePickerAsset } from 'expo-image-picker'
 import { CategoryRepositoryImpl } from '../../../Data/repositories/CategoryRepository'
 
-const {create} = new CategoryRepositoryImpl();
+const {updateWithImage} = new CategoryRepositoryImpl();
 
-export const CreateCategoryUseCase = async(category:Category, file:ImagePickerAsset) => {
-  return await create(category,file);
+export const UpdateWithImageCategoryUseCase = async(category:Category, file:ImagePickerAsset) => {
+  return await updateWithImage(category,file);
 }
