@@ -8,10 +8,6 @@ export const AdminCategoryListScreem = () => {
     useViewModel();
 
   useEffect(() => {
-    getCategories();
-  }, []);
-
-  useEffect(() => {
     if (responseMessage !== "") {
       ToastAndroid.show(responseMessage, ToastAndroid.LONG);
     }

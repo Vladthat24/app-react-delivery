@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ResponseApiDelivery } from "../../Data/sources/remote/models/ResponseApiDelivery";
 import { Category } from "../../Domain/entities/Category";
 import { ImagePickerResult } from "expo-image-picker";
@@ -29,6 +29,12 @@ export const CategoryContext = createContext({} as CategoryContextProps);
 export const CategoryProvider = ({ children }: any) => {
   const [categories, setCategories] = useState<Category[]>([]);
 
+  useEffect(() => {
+    if (categories.length === 0) {
+      getCategories();
+    }
+  }, []);
+
   const getCategories = async (): Promise<void> => {
     const result = await GetAllCategoryUseCase();
     setCategories(result);
@@ -39,12 +45,12 @@ export const CategoryProvider = ({ children }: any) => {
     file: ImagePickerResult
   ): Promise<ResponseApiDelivery> => {
     const response = await CreateCategoryUseCase(category, file!);
-    setCategories(categories);
+    getCategories();
     return response;
   };
   const update = async (category: Category): Promise<ResponseApiDelivery> => {
     const response = await UpdateCategoryUseCase(category);
-    setCategories(categories);
+    getCategories();
     return response;
   };
   const updateWithImage = async (
@@ -52,13 +58,13 @@ export const CategoryProvider = ({ children }: any) => {
     file: ImagePickerResult
   ): Promise<ResponseApiDelivery> => {
     const response = await UpdateWithImageCategoryUseCase(category, file!);
-    setCategories(categories);
+    getCategories();
     return response;
   };
 
   const remove = async (id: string): Promise<ResponseApiDelivery> => {
     const response = await DeleteCategoryUseCase(id);
-    setCategories(categories);
+    getCategories();
     return response;
   };
 
