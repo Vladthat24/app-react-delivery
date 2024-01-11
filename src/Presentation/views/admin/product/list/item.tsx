@@ -1,32 +1,32 @@
 import React from "react";
-import { Category } from "../../../../../Domain/entities/Category";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { CategoryStackParamList } from "../../../../navigator/AdminCategoryNavigator";
+import { Product } from "../../../../../Domain/entities/Product";
 
 interface Props {
-  category: Category;
+  product: Product;
   remove:(id:string)=>void;
 }
 
-export const AdminCategoryListItem = ({ category,remove }: Props) => {
+export const AdminProductListItem = ({ product,remove }: Props) => {
 
     const navigation =useNavigation<StackNavigationProp<CategoryStackParamList>>();
 
   return (
     <Pressable
-      onPress={()=>navigation.navigate('AdminProductNavigator',{category:category})}
+      //onPress={()=>navigation.navigate('AdminProductNavigator',{category:category})}
     >
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: category.image }} />
+        <Image style={styles.image} source={{ uri: product.image1 }} />
         <View style={styles.info}>
-          <Text style={styles.title}>{category.name}</Text>
-          <Text style={styles.description}>{category.description}</Text>
+          <Text style={styles.title}>{product.name}</Text>
+          <Text style={styles.description}>{product.description}</Text>
         </View>
         <View style={styles.acctionContainer}>
           <Pressable
-            onPress={()=>navigation.navigate('AdminCategoryUpdateScreen',{category:category})}
+            //onPress={()=>navigation.navigate('AdminCategoryUpdateScreen',{category:category})}
           >
             <Image
               style={styles.acctionImage}
@@ -34,7 +34,7 @@ export const AdminCategoryListItem = ({ category,remove }: Props) => {
             />
           </Pressable>
           <Pressable 
-            onPress={()=>remove(category.id!)}>
+            onPress={()=>remove(product.id!)}>
             <Image
               style={styles.acctionImage}
               source={require("../../../../../../assets/trash.png")}
