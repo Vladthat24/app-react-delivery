@@ -5,46 +5,29 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { Product } from "../../../../../Domain/entities/Product";
 import { ProductStackParamList } from "../../../../navigator/AdminProductNavigator";
 import { Category } from "../../../../../Domain/entities/Category";
+import { ClientStackParamList } from "../../../../navigator/ClientStackNavigator";
 
 interface Props {
   product: Product;
-  category:Category;
-  remove:(product:Product)=>void;
+  navigation: StackNavigationProp<ClientStackParamList,"ClientProductListScreen",undefined>
 }
 
-export const AdminProductListItem = ({ product,category,remove }: Props) => {
+export const ClientProductListItem = ({ product,navigation }: Props) => {
     console.log("Producto en AdminProudctLisItem: ",product );
     
-    const navigation =useNavigation<StackNavigationProp<ProductStackParamList>>();
 
   return (
     <Pressable
-      //onPress={()=>navigation.navigate('AdminProductNavigator',{category:category})}
+      onPress={()=>navigation.navigate('ClientProductDetailScreen',{product:product})}
     >
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: product.image3 }} />
+        
         <View style={styles.info}>
           <Text style={styles.title}>{product.name}</Text>
           <Text style={styles.description}>{product.description}</Text>
           <Text style={styles.price}> S./ {product.price}</Text>
         </View>
-        <View style={styles.acctionContainer}>
-          <Pressable
-            onPress={()=>navigation.navigate('AdminProductUpdateScreen',{product:product, category:category})}
-          >
-            <Image
-              style={styles.acctionImage}
-              source={require("../../../../../../assets/edit.png")}
-            />
-          </Pressable>
-          <Pressable 
-            onPress={()=>remove(product)}>
-            <Image
-              style={styles.acctionImage}
-              source={require("../../../../../../assets/trash.png")}
-            />
-          </Pressable>
-        </View>
+        <Image style={styles.image} source={{ uri: product.image3 }} />
       </View>
       <View style={styles.divider}></View>
     </Pressable>
@@ -56,9 +39,10 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     height: 90,
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
     marginTop: 10,
-    paddingTop:10
+    paddingTop:10,
+    justifyContent:'space-between',
   },
   image: {
     width: 60,

@@ -3,6 +3,7 @@ import { Text, ToastAndroid, View } from "react-native";
 import useViewModel from "./ViewModel";
 import { FlatList } from "react-native-gesture-handler";
 import { AdminCategoryListItem } from "./item";
+
 export const AdminCategoryListScreem = () => {
   const { categories, responseMessage, getCategories, deleteCategories } =
     useViewModel();

@@ -4,7 +4,7 @@ import {View,Image,TextInput,StyleSheet,KeyboardType } from 'react-native';
 interface Props{
     image:string,
     placerholder:string,
-    value:string,
+    value:any,
     keyboardType:KeyboardType,
     secureTextEntry?:boolean,
     property:string,

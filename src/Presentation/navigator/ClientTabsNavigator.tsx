@@ -1,9 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../views/home/Home";
-import { ClientCategoryListScreem } from "../views/client/category/list/CategoryList";
+import { ClientCategoryListScreen } from "../views/client/category/list/CategoryList";
 import { ClientOrderListScreem } from "../views/client/order/list/OrderList";
 import { ProfileInfoScreen } from "../views/profile/info/ProfileInfo";
 import { Image } from "react-native";
+import { ClientStackNavigator } from "./ClientStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -11,10 +12,11 @@ export const ClientTabsNavigator = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="ClientCategoryListScreem"
-        component={ClientCategoryListScreem}
+        name="ClientStackNavigator"
+        component={ClientStackNavigator}
         options={{
           title: "Categorias",
+          headerShown:false,
           tabBarLabel: "Categorias",
           tabBarIcon: ({ color }) => (
             <Image
