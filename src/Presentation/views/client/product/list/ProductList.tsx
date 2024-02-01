@@ -16,7 +16,8 @@ export const ClientProductListScreen = ({ navigation, route }: Props) => {
   useEffect(() => {
     getProducts(idCategory);
   }, []);
-
+  console.log("Producto .:",products);
+  
   return (
     <View style={{flex:1,backgroundColor:'white'}}>
       <FlatList

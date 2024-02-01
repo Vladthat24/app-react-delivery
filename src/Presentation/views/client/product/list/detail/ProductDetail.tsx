@@ -24,7 +24,7 @@ export const ClientProductDetailScreen = ({ navigation, route }: Props) => {
   const width = Dimensions.get("window").width;
   const height = Dimensions.get("window").height;
 
-  const { productImageList, quantity, price, addItem, removeItem } =
+  const { shoppingBag,productImageList, quantity, price,addToBag, addItem, removeItem } =
     useViewModel(product);
 
   return (
@@ -87,7 +87,7 @@ export const ClientProductDetailScreen = ({ navigation, route }: Props) => {
           </TouchableOpacity>
 
           <View style={styles.buttonAdd}>
-            <RounderButton text="AGREGAR" onPress={() => {}} />
+            <RounderButton text="AGREGAR" onPress={() => addToBag()} />
           </View>
         </View>
       </View>

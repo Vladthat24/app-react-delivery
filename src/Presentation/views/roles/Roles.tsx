@@ -32,7 +32,7 @@ export const RolesScreen = ({navigation,route}:Props) => {
       <Carousel
         loop={true}
         width={width}
-        height={height/1.9}
+        height={height/1.7}
         autoPlay={true}
         data={user?.roles!}
         scrollAnimationDuration={5000}

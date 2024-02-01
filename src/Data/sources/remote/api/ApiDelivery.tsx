@@ -4,14 +4,14 @@ import { User } from '../../../../Domain/entities/User';
 
 
 const ApiDelivery= axios.create({
-    baseURL: 'http://192.168.18.6:3000/api',
+    baseURL: 'http://192.168.18.28:3000/api',
     headers:{
         'Content-type':'application/json'
     }
 })
 
 const ApiDeliveryFormData= axios.create({
-    baseURL: 'http://192.168.18.6:3000/api',
+    baseURL: 'http://192.168.18.28:3000/api',
     headers:{
         'Content-type':'multipart/form-data',
         'accept':'application/json'

@@ -11,6 +11,10 @@ export class ShoppingBagRepositoryImpl implements ShoppingBagRepository {
     const { getItem } = LocalStorage();
     const data = await getItem("shopping_bag");
     const shoppingBag: Product[] = JSON.parse(data as any);
-    return shoppingBag;
+    if(shoppingBag===null){
+      return [];
+    }else{
+      return shoppingBag;
+    }
   }
 }

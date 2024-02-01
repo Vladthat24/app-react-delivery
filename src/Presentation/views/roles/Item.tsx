@@ -12,6 +12,8 @@ interface Props {
   navigation: StackNavigationProp<RootStackParamList, "RolesScreen", undefined>;
 }
 export const RolesItem = ({ rol, height, width, navigation }: Props) => {
+  console.log("ROles: ",rol);
+  
   return (
     <TouchableOpacity
       onPress={() => {
