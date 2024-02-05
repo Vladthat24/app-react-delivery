@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { ShoppingBagContext } from "../../../../context/ShoppingBagContext";
-import { Product } from "../../../../../Domain/entities/Product";
+import { ShoppingBagContext } from "../../../context/ShoppingBagContext";
+import { Product } from "../../../../Domain/entities/Product";
 
 const ClientShoppingBagViewModel = () => {
   const { shoppingBag, saveItem, deleteItem, total } =

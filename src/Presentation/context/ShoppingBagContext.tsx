@@ -61,7 +61,6 @@ export const ShoppingBagProvider=({children}:any)=>{
         shoppingBag.splice(index,1);
         await SaveShoppingBagUseCase(shoppingBag);
         getShoppingBag();
-
     }
 
     return (

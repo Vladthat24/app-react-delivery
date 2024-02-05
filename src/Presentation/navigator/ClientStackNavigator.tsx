@@ -5,13 +5,17 @@ import { Product } from "../../Domain/entities/Product";
 import { ClientProductDetailScreen } from "../views/client/product/list/detail/ProductDetail";
 import { ShoppingBagProvider } from "../context/ShoppingBagContext";
 import { Image, Pressable } from "react-native";
-import { ClientShoppingBagScreen } from "../views/client/order/shopping_bag/ShoppingBag";
+import { ClientShoppingBagScreen } from "../views/client/shopping_bag/ShoppingBag";
+import { ClientAddressListScreen } from "../views/client/address/list/AddressList";
+import { ClientAddressCreateScreen } from "../views/client/address/create/AddressCreate";
 
 export type ClientStackParamList = {
   ClientCategoryListScreen: undefined;
   ClientProductListScreen: { idCategory: string };
   ClientProductDetailScreen: { product: Product };
   ClientShoppingBagScreen: undefined;
+  ClientAddressListScreen: undefined;
+  ClientAddressCreateScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<ClientStackParamList>();
@@ -67,6 +71,33 @@ export const ClientStackNavigator = () => {
           options={{
             headerShown: true,
             title: "Mi Orden",
+          }}
+        />
+
+        <Stack.Screen
+          name="ClientAddressListScreen"
+          component={ClientAddressListScreen}
+          options={({ route, navigation }) => ({
+            title: "Mis Direcciones",
+            headerShown: true,
+            headerRight: () => (
+              <Pressable
+                onPress={() => navigation.navigate("ClientAddressCreateScreen")}
+              >
+                <Image
+                  source={require("../../../assets/add.png")}
+                  style={{ width: 30, height: 30 }}
+                />
+              </Pressable>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="ClientAddressCreateScreen"
+          component={ClientAddressCreateScreen}
+          options={{
+            headerShown: true,
+            title: "Nueva Dirección",
           }}
         />
       </Stack.Navigator>

@@ -3,10 +3,15 @@ import { Text, View } from "react-native";
 import useViewModel from './ViewModel';
 import { FlatList } from "react-native-gesture-handler";
 import { ShoppingBagItem } from "./item";
-import RounderButton from "../../../../components/RounderButton";
+import RounderButton from "../../../components/RounderButton";
 import styles from "./Styles";
+import { ClientStackParamList } from "../../../navigator/ClientStackNavigator";
+import { StackScreenProps } from "@react-navigation/stack";
 
-export const ClientShoppingBagScreen = () => {
+
+interface Props extends StackScreenProps<ClientStackParamList,'ClientShoppingBagScreen'>{};
+
+export const ClientShoppingBagScreen = ({navigation,route}:Props) => {
 
     const {shoppingBag, total, addItem,subtractItem,_deleteItem}=useViewModel();
 
@@ -27,7 +32,7 @@ export const ClientShoppingBagScreen = () => {
             <Text>S/. {total} </Text>
         </View>
         <View style={styles.buttonAdd}>
-            <RounderButton text='CONFIRMAR ORDEN' onPress={()=>{}}/>
+            <RounderButton text='CONFIRMAR ORDEN' onPress={()=>navigation.navigate('ClientAddressListScreen')}/>
         </View>
       </View>
     </View>

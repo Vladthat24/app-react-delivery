@@ -1,6 +1,6 @@
 import React from "react";
-import { Product } from "../../../../../Domain/entities/Product";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Product } from "../../../../Domain/entities/Product";
 
 interface Props {
   product: Product;
@@ -48,7 +48,7 @@ export const ShoppingBagItem = ({
           </View>
 
           <TouchableOpacity onPress={()=> deleteITem(product)}>
-            <Image style={styles.deleteItem} source={require("../../../../../../assets/trash.png")}/>
+            <Image style={styles.deleteItem} source={require("../../../../../assets/trash.png")}/>
           </TouchableOpacity>
         </View>
       </View>
