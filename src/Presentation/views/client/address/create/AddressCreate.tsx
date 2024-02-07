@@ -1,32 +1,40 @@
-import React, { useState,useEffect } from "react";
-import { View, Pressable, Image, ActivityIndicator, ToastAndroid } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Pressable,
+  Image,
+  ActivityIndicator,
+  ToastAndroid,
+  TouchableOpacity,
+} from "react-native";
 import styles from "./Styles";
 import CustomTextInput from "../../../../components/CustomTextInput";
 import useViewModel from "./ViewModel";
 import RounderButton from "../../../../components/RounderButton";
 import ModalPickImage from "../../../../components/ModalPickImage";
 import { MyColors } from "../../../../theme/AppThemes";
+import { StackScreenProps } from "@react-navigation/stack";
+import { ClientStackParamList } from "../../../../navigator/ClientStackNavigator";
 
-export const ClientAddressCreateScreen = () => {
+interface Props extends StackScreenProps<ClientStackParamList,'ClientAddressMapScreen'>{};
+export const ClientAddressCreateScreen = ({navigation,route}:Props) => {
   const {
-    name,
-    description,
-    image,
+    address,
+    neighborhood,
+    refPoint,
     onChange,
     responseMessage,
     loading,
-    pickerImage,
-    takePhoto,
     createCategory,
   } = useViewModel();
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(()=>{
-    if(responseMessage!==''){
-      ToastAndroid.show(responseMessage,ToastAndroid.LONG);
+  useEffect(() => {
+    if (responseMessage !== "") {
+      ToastAndroid.show(responseMessage, ToastAndroid.LONG);
     }
-  },[responseMessage])
+  }, [responseMessage]);
 
   return (
     <View style={styles.container}>
@@ -34,14 +42,10 @@ export const ClientAddressCreateScreen = () => {
         style={styles.imageContainer}
         onPress={() => setModalVisible(true)}
       >
-        {image == "" ? (
-          <Image
-            style={styles.image}
-            source={require("../../../../../../assets/image_new.png")}
-          />
-        ) : (
-          <Image style={styles.image} source={{ uri: image }} />
-        )}
+        <Image
+          style={styles.image}
+          source={require("../../../../../../assets/map.png")}
+        />
       </Pressable>
 
       <View style={styles.form}>
@@ -49,29 +53,38 @@ export const ClientAddressCreateScreen = () => {
           placerholder="Nombre de la Dirección"
           image={require("../../../../../../assets/categories.png")}
           keyboardType="default"
-          property="name"
-          value={name}
+          property="address"
+          value={address}
           onChangeText={onChange}
         />
         <CustomTextInput
-          placerholder="Nombre de la Dirección"
+          placerholder="Descripción"
           image={require("../../../../../../assets/description.png")}
           keyboardType="default"
-          property="description"
-          value={description}
+          property="neighborhood"
+          value={neighborhood}
           onChangeText={onChange}
         />
+        <TouchableOpacity onPress={()=>navigation.navigate('ClientAddressMapScreen')}>
+          <CustomTextInput
+            placerholder="Punto de referencia"
+            image={require("../../../../../../assets/description.png")}
+            keyboardType="default"
+            property="refPoint"
+            value={refPoint}
+            onChangeText={onChange}
+            editable={false}
+          />
+        </TouchableOpacity>
+
       </View>
       <View style={styles.buttonContainer}>
-        <RounderButton text="CREAR DIRECCIÓN" onPress={() => createCategory()} />
+        <RounderButton
+          text="CREAR DIRECCIÓN"
+          onPress={() => createCategory()}
+        />
       </View>
 
-      <ModalPickImage
-        openGallery={pickerImage}
-        openCamara={takePhoto}
-        modalUseState={modalVisible}
-        setModalUserState={setModalVisible}
-      />
       {loading && <ActivityIndicator size="large" color={MyColors.primary} />}
     </View>
   );

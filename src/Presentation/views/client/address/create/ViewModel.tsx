@@ -5,9 +5,9 @@ import { CategoryContext } from "../../../../context/CategoryContext";
 
 const ClientAddressCreateViewModel = () => {
   const [values, setValues] = useState({
-    name: "",
-    description: "",
-    image: "",
+    address: "",
+    neighborhood: "",
+    refPoint: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ const ClientAddressCreateViewModel = () => {
 
   const createCategory = async () => {
    
-    setLoading(true)
+    /* setLoading(true)
     console.log("Values: ",values);
     console.log("File: ",file!);
     const response = await create(values as any, file!);
@@ -30,48 +30,22 @@ const ClientAddressCreateViewModel = () => {
     if (response.success) {
       setResponseMessage(response.message);
       resetForm();
-    }
+    } */
   };
 
-  const pickerImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      quality: 1,
-    });
 
-    if (!result.canceled) {
-      onChange("image", result.assets[0].uri);
-      setFile(result.assets[0]);
-    }
-  };
-
-  const takePhoto = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      onChange("image", result.assets[0].uri);
-      setFile(result.assets[0]);
-    }
-  };
 
   const resetForm=async()=>{
-    setValues({
+    /* setValues({
       name:'',
       description:'',
       image:'',
-    })
+    }) */
   }
 
   return {
     ...values,
     onChange,
-    pickerImage,
-    takePhoto,
     loading,
     successMessage,
     responseMessage,
