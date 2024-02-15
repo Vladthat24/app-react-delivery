@@ -25,13 +25,35 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier":"com.vladcorp.app",
+      "config":{
+        "googleMapsApiKey":"AIzaSyCnGKuPxIucIsy48G4BF0v6ayR2qKmdMuY"
+      },
+      "infoPlist":{
+        "UIBackgroundModes":[
+          "location",
+          "fetch"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package":"com.vladcorp.app",
+      "config":{
+        "googleMaps":{
+          "apiKey":"AIzaSyCnGKuPxIucIsy48G4BF0v6ayR2qKmdMuY"
+        }
+      },
+      "permission":[
+        "ACCESS_BACKGROUND_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "FOREGROUND_SERVICE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
