@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Image, Text, ToastAndroid, View } from "react-native";
+import {Image, Text, ToastAndroid, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import styles from "./Styles";
 import useViewModel from "./ViewModel";
@@ -8,7 +8,7 @@ import stylesMap from "./StylesMap";
 
 
 export const ClientAddressMapScreen = () => {
-  const { messagePermissions, position, mapRef } = useViewModel();
+  const { messagePermissions, position, mapRef,onRegionChangeComplete,name } = useViewModel();
 
   useEffect(() => {
     if (messagePermissions != "") {
@@ -22,14 +22,17 @@ export const ClientAddressMapScreen = () => {
         customMapStyle={stylesMap}
         style={{ height: "100%", width: "100%" }}
         provider={PROVIDER_GOOGLE}
+        onRegionChangeComplete={(region)=>{
+          onRegionChangeComplete(region.latitude,region.longitude);
+        }}
       />
-      <Image
-        style={styles.imageLocation}
+       <Image
         source={require("../../../../../../assets/location_home.png")}
+        style={styles.imageLocation}
       />
       <View style={styles.refPoint}>
         <Text style={ styles.refPointText}>
-          Punto de referencia
+          {name}
         </Text>
       </View>
       <View style={styles.buttonRefPoint}>
