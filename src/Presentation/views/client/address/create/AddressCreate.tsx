@@ -16,7 +16,7 @@ import { MyColors } from "../../../../theme/AppThemes";
 import { StackScreenProps } from "@react-navigation/stack";
 import { ClientStackParamList } from "../../../../navigator/ClientStackNavigator";
 
-interface Props extends StackScreenProps<ClientStackParamList,'ClientAddressMapScreen'>{};
+interface Props extends StackScreenProps<ClientStackParamList,'ClientAddressCreateScreen'>{};
 export const ClientAddressCreateScreen = ({navigation,route}:Props) => {
   const {
     address,
@@ -25,10 +25,18 @@ export const ClientAddressCreateScreen = ({navigation,route}:Props) => {
     onChange,
     responseMessage,
     loading,
-    createCategory,
+    createAddress,
+    onChangeRefPoint,
   } = useViewModel();
 
   const [modalVisible, setModalVisible] = useState(false);
+
+  //Capturar Valores de la pantalla hija
+  useEffect(()=>{
+    if(route.params?.refPoint){
+      onChangeRefPoint(route.params?.refPoint,route.params?.latitude,route.params?.longitude);
+    }
+  },[route.params?.refPoint])
 
   useEffect(() => {
     if (responseMessage !== "") {
@@ -81,7 +89,7 @@ export const ClientAddressCreateScreen = ({navigation,route}:Props) => {
       <View style={styles.buttonContainer}>
         <RounderButton
           text="CREAR DIRECCIÓN"
-          onPress={() => createCategory()}
+          onPress={() => createAddress()}
         />
       </View>
 

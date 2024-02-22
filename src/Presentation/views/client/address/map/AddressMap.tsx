@@ -1,14 +1,26 @@
 import React, { useEffect } from "react";
-import {Image, Text, ToastAndroid, View } from "react-native";
+import { Image, Text, ToastAndroid, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import styles from "./Styles";
 import useViewModel from "./ViewModel";
 import RounderButton from "../../../../components/RounderButton";
 import stylesMap from "./StylesMap";
+import { StackScreenProps } from "@react-navigation/stack";
+import { ClientStackParamList } from "../../../../navigator/ClientStackNavigator";
 
+interface Props
+  extends StackScreenProps<ClientStackParamList, "ClientAddressMapScreen"> {}
 
-export const ClientAddressMapScreen = () => {
-  const { messagePermissions, position, mapRef,onRegionChangeComplete,name } = useViewModel();
+export const ClientAddressMapScreen = ({ navigation, route }: Props) => {
+  const {
+    messagePermissions,
+    position,
+    mapRef,
+    onRegionChangeComplete,
+    name,
+    latitude,
+    longitude,
+  } = useViewModel();
 
   useEffect(() => {
     if (messagePermissions != "") {
@@ -22,23 +34,31 @@ export const ClientAddressMapScreen = () => {
         customMapStyle={stylesMap}
         style={{ height: "100%", width: "100%" }}
         provider={PROVIDER_GOOGLE}
-        onRegionChangeComplete={(region)=>{
-          onRegionChangeComplete(region.latitude,region.longitude);
+        onRegionChangeComplete={(region) => {
+          onRegionChangeComplete(region.latitude, region.longitude);
         }}
       />
-       <Image
+      <Image
         source={require("../../../../../../assets/location_home.png")}
         style={styles.imageLocation}
       />
       <View style={styles.refPoint}>
-        <Text style={ styles.refPointText}>
-          {name}
-        </Text>
+        <Text style={styles.refPointText}>{name}</Text>
       </View>
       <View style={styles.buttonRefPoint}>
         <RounderButton
           text="Seleccionar Punto"
-          onPress={()=>{}}
+          onPress={() => {
+            navigation.navigate({
+              name: "ClientAddressCreateScreen",
+              merge: true,
+              params: {
+                refPoint: name,
+                latitude: latitude,
+                longitude: longitude,
+              },
+            });
+          }}
         />
       </View>
     </View>
