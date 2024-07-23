@@ -5,6 +5,7 @@ import { AdminOrderListScreem } from "../views/admin/order/list/OrderList";
 import { ProfileInfoScreen } from "../views/profile/info/ProfileInfo";
 import { Image, Pressable } from "react-native";
 import { AdminCategoryNavigator } from "./AdminCategoryNavigator";
+import { AdminOrderStackNavigator } from "./AdminOrderStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,8 +31,8 @@ export const AdminTabsNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="AdminOrderListScreem"
-        component={AdminOrderListScreem}
+        name="AdminOrderStackNavigator"
+        component={AdminOrderStackNavigator}
         options={{
           title: "Pedidos",
           tabBarLabel: "Pedidos",
