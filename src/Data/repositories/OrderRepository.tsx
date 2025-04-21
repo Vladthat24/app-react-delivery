@@ -33,4 +33,23 @@ export class OrderRepositoryImpl implements OrderRepository {
       return Promise.resolve(apiError);
     }
   }
+
+
+  async updateToDispatched(order:Order):Promise<ResponseApiDelivery>{
+    
+    try {
+      const response = await ApiDelivery.put<ResponseApiDelivery>(
+        "/orders/updateToDispatched",
+        order
+      );
+      return Promise.resolve(response.data);
+    } catch (error) {
+      let e = error as AxiosError;
+      console.log("Error: " + JSON.stringify(e.response?.data));
+      const apiError: ResponseApiDelivery = JSON.parse(
+        JSON.stringify(e.response?.data)
+      );
+      return Promise.resolve(apiError);
+    }
+  }
 }

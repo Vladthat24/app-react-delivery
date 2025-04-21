@@ -8,11 +8,11 @@ const AdminOrderDetailStyles= StyleSheet.create({
     },
     products:{
         width:'100%',
-        height:'40%'
+        height:'45%'
     },
     info:{
         width:'100%',
-        height:'60%',
+        height:'55%',
         backgroundColor:'white',
         borderTopLeftRadius:40,
         borderTopRightRadius:40,
@@ -43,6 +43,22 @@ const AdminOrderDetailStyles= StyleSheet.create({
       fontWeight:'bold',
       marginTop:20,
       color:MyColors.primary
+    },
+    totalInfo:{
+        marginTop: 25,
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        alignItems: 'center'
+    },
+    total:{
+        fontWeight:'bold',
+        fontSize: 17
+    },
+    button:{
+        width: '50%'
+    },
+    dropDown:{
+        marginTop: 15
     }
 
 });

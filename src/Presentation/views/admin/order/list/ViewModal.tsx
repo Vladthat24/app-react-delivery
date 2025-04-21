@@ -1,22 +1,30 @@
-import React, { useState } from 'react'
-import { Order } from '../../../../../Domain/entities/Order';
-import { GetByStatusOrderUseCase } from '../../../../../Domain/useCases/order/GetByStatusOrder';
+import React, { useContext, useState } from "react";
+import { Order } from "../../../../../Domain/entities/Order";
+import { GetByStatusOrderUseCase } from "../../../../../Domain/useCases/order/GetByStatusOrder";
+import { OrderContext } from "../../../../context/OrderContext";
 
+const AdminOrderListComponent = () => {
 
-const AdminOrderListComponent= ()=>{
+  const {
+    ordersPayed,
+    ordersDispatched,
+    ordersOnTheWay,
+    ordersDelivery,
+    getOrderByStatus,
+  } = useContext(OrderContext);
 
-    const[orders,setOrders]=useState<Order[]>([]);
+  const getOrders = async (status: string) => {
+    const result = await getOrderByStatus(status);
+    console.log("ORDENES: " + JSON.stringify(result, null, 3));
+  };
 
-    const getOrders= async(status:string)=>{
-        const result= await GetByStatusOrderUseCase(status);
-        setOrders(result);
-        console.log("ORDENES: "+ JSON.stringify(result,null,3));
-    }
-
-    return {
-        orders,
-        getOrders,
-    }
-}
+  return {
+    ordersPayed,
+    ordersDispatched,
+    ordersOnTheWay,
+    ordersDelivery,
+    getOrders,
+  };
+};
 
 export default AdminOrderListComponent;
